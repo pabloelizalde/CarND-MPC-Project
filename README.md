@@ -3,6 +3,33 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Intro
+
+This repository contains the solution to the MPC Project. The projects consits in the implementation of a controller that allows to navigate through the track of the simulator. The controller will communicates to the car the steering and the acceleration at every moment.  
+
+The project basically consists in calculating a trajectory as an optimization problem. We need to figure out the trajectory that causes the minimal cost. We will update our actuators to follow that minimal cost. We have to keep updating our optimal trajectory, since we are calculating aproximations, and it is not going to match the real world. That is why we need to reevaluate and find the optimal actuators. 
+
+## Implementation
+
+There are two tools that helped a lot for the realization of the project:
+
+* [IPOPT](https://projects.coin-or.org/Ipopt/): help us to find mathematical solutions to optimizations problems.
+* [CppAD](https://www.coin-or.org/CppAD/): a library we use for automatic differenciation.
+
+To do the setup of our MPC we start defining the timestep lenght and duration. We started with initial value of `N = 10`, and `dt = 0.5`, as in the quiz. After some try and error of our solution, we got the best behaviour when we decreased the `dt = 0.1`. The change of any of the values had a mayor impact in the behaviour of the car. When the duration was too long, the simulation was slower. And with bigger values for the timested, the car was driving side to side till was out of the road.
+
+The setup is as follows:
+
+* First we pass the currect state to the MPC
+
+	![image1](./assets/state.png) 
+	
+* We define the vehicle model. As well as contraints, like limitations in the actuators (steering between -25 and 25, and acceleration between -1 and 1).
+
+	![image2](./assets/model.png)
+
+* We pass this data to the optimization solver to return a vector of control inputs that minimize the cost function. These are the values that will pass to our car in the simulator. Once the first pair of values are passed, we will do the same process again in a loop. 
+
 ## Dependencies
 
 * cmake >= 3.5

@@ -92,12 +92,6 @@ int main() {
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
 
-          /*
-          * TODO: Calculate steering angle and throttle using MPC.
-          *
-          * Both are in between [-1, 1].
-          *
-          */
           vector<double> waypoints_x;
           vector<double> waypoints_y;
 
@@ -122,7 +116,6 @@ int main() {
 
           //calculate cte and epsi
           double cte = polyeval(coeffs, 0);
-          // double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px,2));
           double epsi = -atan(coeffs[1]);
 
           double steer_value = j[1]["steering_angle"];
@@ -130,12 +123,6 @@ int main() {
 
           Eigen::VectorXd state(6);
           state << 0, 0, 0, v, cte, epsi;
-          /*
-          * TODO: Calculate steering angle and throttle using MPC.
-          *
-          * Both are in between [-1, 1].
-          *
-          */
 
           auto vars = mpc.Solve(state, coeffs);
           steer_value = vars[0];
@@ -183,7 +170,7 @@ int main() {
 
 
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          //std::cout << msg << std::endl;
           // Latency
           // The purpose is to mimic real driving conditions where
           // the car does actuate the commands instantly.
