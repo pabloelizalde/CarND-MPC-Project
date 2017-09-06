@@ -16,6 +16,8 @@ There are two tools that helped a lot for the realization of the project:
 * [IPOPT](https://projects.coin-or.org/Ipopt/): help us to find mathematical solutions to optimizations problems.
 * [CppAD](https://www.coin-or.org/CppAD/): a library we use for automatic differenciation.
 
+Our first step will be to find a polynomial that fits with the future waypoints that are given by the simulator. Before anything we will change these waypoints from map coordinates to car coordinates. Once we have that we can use the `polyfit` function that is given in `main.cpp` to get the coefficients of our third order polynomial.
+
 To do the setup of our MPC we start defining the timestep lenght and duration. We started with initial value of `N = 10`, and `dt = 0.5`, as in the quiz. After some try and error of our solution, we got the best behaviour when we decreased the `dt = 0.1`. The change of any of the values had a mayor impact in the behaviour of the car. When the duration was too long, the simulation was slower. And with bigger values for the timested, the car was driving side to side till was out of the road.
 
 The setup is as follows:
