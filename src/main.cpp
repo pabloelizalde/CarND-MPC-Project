@@ -122,15 +122,13 @@ int main() {
           double latency = 0.1;
           double Lf = 2.67;
           double cte = polyeval(coeffs, 0);
-          double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px,2));
+          double epsi = - atan(coeffs[1]);
 
-          px = px + v * cos(psi) * latency;
-          py = py + v * sin(psi) * latency;
-          psi = psi - v * steer_value/Lf * latency;
           v = v + throttle_value * latency;
           cte = cte + (v * sin(epsi) * latency);
           epsi = epsi - v * steer_value / Lf * latency;
 
+          //Since we previously have shift to vehicle coordinates, the values px, py and psi of the state are 0.
           state << 0, 0, 0, v, cte, epsi;
 
           auto vars = mpc.Solve(state, coeffs);
